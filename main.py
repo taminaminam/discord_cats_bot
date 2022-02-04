@@ -1,7 +1,9 @@
 from asyncio import sleep
+import asyncio
 from multiprocessing.connection import wait
 import random
 import threading
+import time
 import cat_api
 import os
 
@@ -13,11 +15,21 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 BOT_OWNER_ID = os.getenv('BOT_OWNER_ID')
 
 client = discord.Client()
+dead = False
 
-def change_avatar():
-    while not client.is_closed:
-        client.user.avatar_url=cat_api.get_url()
-        sleep(5*60)
+async def change_avatar():
+    print("changing avatar")
+    await client.user.edit(avatar=cat_api.get_image_as_bytes())
+
+async def change_avatar_threading():
+    print('starting change avatar thread!')
+    while not client.is_ready:
+        pass
+    print('c.a.t. client is ready')
+    while not dead:
+        await change_avatar()
+        time.sleep(5*60)
+    print('change avatar thread killed')
 
 
 @client.event
@@ -26,8 +38,6 @@ async def on_ready():
     for guild in client.guilds:
         print(f'{client.user} has connected to the guild: {guild.name} (id: "{guild.id}")')
 
-    change_avatar_thread = threading.Thread(target=change_avatar)
-    change_avatar_thread.start()
     
 
 @client.event
@@ -60,5 +70,10 @@ async def on_message(message):
         print(f'Bot logged out')
         await client.close()
         print(f'Bot terminated')
+        dead = True
+    elif message.content == 'change_avatar' and str(message.author.id) == str(BOT_OWNER_ID):
+        await change_avatar()
+        await message.channel.send('boop!')
+        
 
 client.run(TOKEN)
