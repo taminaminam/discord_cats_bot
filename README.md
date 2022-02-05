@@ -2,6 +2,8 @@
 
 This is a very simple bot written in [discord.py](https://discordpy.readthedocs.io/en/stable/) that gives you cats if you write the command <code>cat!</code> into chat
 
+## Setting up the .env file
+
 You will need to create a file called <code>.env</code> in the main directory.
 
 Inside the <code>.env</code> file, you will need to add the text <code>DISCORD_TOKEN={your_discord_token}</code> (replace <code>{your_discord_token}</code> with your actual discord bot token).
