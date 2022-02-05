@@ -13,7 +13,7 @@ In the end your <code>.env</code> file should look like this[^1]:
 [^1]: The values presented in this example are fake and should not be usable in this state.
 
 ```.env
-DISCORD_TOKEN=bjyab6sy6NxcLb4GR9a!pqCFFz?snP&Hhi$q4mhzgob5dR@KBde5
+DISCORD_TOKEN=bjyab6sy6NxcLb4GR9a.pqCFFz_F_snPzHhi$q4mhzgob5dR@KBde5
 BOT_OWNER_ID=123456789012345678
 ```
 
